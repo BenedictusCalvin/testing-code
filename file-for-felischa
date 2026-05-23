@@ -1,0 +1,340 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+  .wrap {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 2rem;
+    background: linear-gradient(135deg, #a78bfa, #f9a8d4);
+  }
+  .card {
+    background: white; border-radius: 28px; padding: 2.5rem 2rem;
+    width: 100%; max-width: 400px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+    animation: fadeIn 0.7s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .emoji-big { font-size: 56px; margin-bottom: 1rem; display: block; }
+  h2 { font-size: 22px; font-weight: 800; color: #6d28d9; margin-bottom: 0.75rem; }
+  p { font-size: 15px; line-height: 1.8; color: #555; }
+  strong.hl { color: #6d28d9; }
+
+  .btn {
+    display: inline-block; margin-top: 1.5rem;
+    padding: 13px 36px; font-size: 15px; font-weight: 700;
+    border: 2.5px solid #6d28d9; border-radius: 50px; cursor: pointer;
+    background: #6d28d9; color: white;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+    width: 100%;
+  }
+  .btn:hover { transform: scale(1.04); box-shadow: 0 8px 22px rgba(109,40,217,0.35); background: #5b21b6; }
+
+  .choices { display: flex; flex-direction: column; gap: 12px; margin-top: 1.5rem; }
+
+  .btn-choice {
+    padding: 13px 20px; font-size: 15px; font-weight: 700;
+    border: 2.5px solid #6d28d9; border-radius: 50px; cursor: pointer;
+    background: white; color: #6d28d9;
+    transition: transform 0.18s, background 0.18s, color 0.18s;
+    width: 100%;
+  }
+  .btn-choice:hover { background: #6d28d9; color: white; transform: scale(1.03); }
+
+  .btn-no {
+    padding: 13px 20px; font-size: 15px; font-weight: 700;
+    border: 2.5px solid #d1d5db; border-radius: 50px; cursor: pointer;
+    background: white; color: #9ca3af;
+    transition: transform 0.18s;
+    width: 100%;
+  }
+  .btn-no:hover { background: #f3f4f6; }
+
+  .star {
+    position: fixed; font-size: 22px;
+    animation: floatUp 2.5s linear forwards;
+    pointer-events: none; z-index: 9999;
+  }
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="card" id="card">
+    <span class="emoji-big">✨</span>
+    <h2>hai FELISCHADWINNA</h2>
+    <p>aku mau bilang sesuatu<br>tapi kamu jangan marah ya.</p>
+    <button class="btn" onclick="nextStep(1)">Yaudah, bilang aja →</button>
+  </div>
+</div>
+
+<script>
+const card = document.getElementById('card');
+
+function anim() {
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'fadeIn 0.6s ease';
+}
+
+function nextStep(step) {
+  anim();
+  if (step === 1) {
+    card.innerHTML = `
+      <span class="emoji-big">📚</span>
+      <h2>UAS-mu deket banget kan?</h2>
+      <p>Cie begadang lagi HAHAHAHAHA.<br>Tapi sebelum balik belajar,<br>dengerin dulu ya.</p>
+      <button class="btn" onclick="nextStep(2)">Oke oke, lanjut →</button>
+    `;
+  } else if (step === 2) {
+    card.innerHTML = `
+      <span class="emoji-big">🌟</span>
+      <h2>Kamu tuh keren dan ga bodoh</h2>
+      <p>Lolos UI, jurusan Manajemen pula—<br>that's not a small thing.<br>Nggak semua orang sekuat kamu<br>yang udah sampai sejauh ini.</p>
+      <button class="btn" onclick="nextStep(3)">Aww, terus? →</button>
+    `;
+  } else if (step === 3) {
+    card.innerHTML = `
+      <span class="emoji-big">💪</span>
+      <h2>Every late night counts</h2>
+      <p>Semua begadang, semua tugas,<br>semua ujian yang udah kamu lewatin—<br>itu yang ngebentuk kamu<br>jadi orang yang <strong class="hl">super tangguh</strong>, which is so you.</p>
+      <button class="btn" onclick="nextStep(4)">Masih ada lagi nih →</button>
+    `;
+  } else if (step === 4) {
+    card.innerHTML = `
+      <span class="emoji-big">🔥</span>
+      <h2>So gaskeun UAS-nya!</h2>
+      <p>Felischa si anak UI MENE🔥🔥—<br>Semoga semua nilai-nilainya<br><strong class="hl">bikin kamu nangis (bahagia)</strong> ya! 🎉</p>
+      <button class="btn" onclick="nextStep(5)">Sip! Ada apa lagi? →</button>
+    `;
+  } else if (step === 5) {
+    card.innerHTML = `
+      <span class="emoji-big">🤭</span>
+      <h2>Eh, one more thing…</h2>
+      <p>Abis UAS selesai,<br>kita ngerayain bareng yuk!<br><br>Pilih yang mana nih?</p>
+      <div class="choices">
+        <button class="btn-choice" onclick="final('padel')">🏓 Main Padel Bareng</button>
+        <button class="btn-choice" onclick="final('nonton')">🎬 Nonton Bareng</button>
+        <button class="btn-no" id="noBtn" onmouseover="moveNo()">Nggak mau 🙈</button>
+      </div>
+    `;
+  }
+}
+
+function moveNo() {
+  const noBtn = document.getElementById('noBtn');
+  if (!noBtn) return;
+  noBtn.style.position = 'fixed';
+  noBtn.style.width = '160px';
+  noBtn.style.left = Math.max(8, Math.random() * (window.innerWidth - 170)) + 'px';
+  noBtn.style.top = Math.max(8, Math.random() * (window.innerHeight - 60)) + 'px';
+  noBtn.style.zIndex = '999';
+}
+
+function final(choice) {
+  stars();
+  anim();
+  if (choice === 'padel') {
+    card.innerHTML = `
+      <span class="emoji-big">🏓</span>
+      <h2>Yesss let's gooo!</h2>
+      <p>Oke deal—fokus dulu buat UAS-nya,<br>habisin semua soalnya.<br><br>Abis itu kita <strong class="hl">main padel bareng</strong><br>sebagai self-reward yang worth it banget! 🎉</p>
+      <p style="margin-top:1rem; font-size:13px; color:#aaa;">Semangat Felischa, you literally got this ✨</p>
+    `;
+  } else {
+    card.innerHTML = `
+      <span class="emoji-big">🎬</span>
+      <h2>Slay dulu UAS-nya!</h2>
+      <p>Oke bestie, habisin dulu ujiannya—<br>tunjukin that Manajemen UI girl energy.<br><br>Nanti kita <strong class="hl">nonton bareng</strong><br>as the ultimate reward! 🍿</p>
+      <p style="margin-top:1rem; font-size:13px; color:#aaa;">Semangat Felischa, you literally got this ✨</p>
+    `;
+  }
+}
+
+function stars() {
+  const emojis = ['✨','⭐','🌟','💫','🎉','💜'];
+  const iv = setInterval(() => {
+    const el = document.createElement('div');
+    el.className = 'star';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+    el.style.bottom = '0';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2500);
+  }, 220);
+  setTimeout(() => clearInterval(iv), 5000);
+}
+</script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+  .wrap {
+    display: flex; justify-content: center; align-items: center;
+    min-height: 100vh; padding: 2rem;
+    background: linear-gradient(135deg, #a78bfa, #f9a8d4);
+  }
+  .card {
+    background: white; border-radius: 28px; padding: 2.5rem 2rem;
+    width: 100%; max-width: 400px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+    animation: fadeIn 0.7s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .emoji-big { font-size: 56px; margin-bottom: 1rem; display: block; }
+  h2 { font-size: 22px; font-weight: 800; color: #6d28d9; margin-bottom: 0.75rem; }
+  p { font-size: 15px; line-height: 1.8; color: #555; }
+  strong.hl { color: #6d28d9; }
+
+  .btn {
+    display: inline-block; margin-top: 1.5rem;
+    padding: 13px 36px; font-size: 15px; font-weight: 700;
+    border: 2.5px solid #6d28d9; border-radius: 50px; cursor: pointer;
+    background: #6d28d9; color: white;
+    transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+    width: 100%;
+  }
+  .btn:hover { transform: scale(1.04); box-shadow: 0 8px 22px rgba(109,40,217,0.35); background: #5b21b6; }
+
+  .choices { display: flex; flex-direction: column; gap: 12px; margin-top: 1.5rem; }
+
+  .btn-choice {
+    padding: 13px 20px; font-size: 15px; font-weight: 700;
+    border: 2.5px solid #6d28d9; border-radius: 50px; cursor: pointer;
+    background: white; color: #6d28d9;
+    transition: transform 0.18s, background 0.18s, color 0.18s;
+    width: 100%;
+  }
+  .btn-choice:hover { background: #6d28d9; color: white; transform: scale(1.03); }
+
+  .btn-no {
+    padding: 13px 20px; font-size: 15px; font-weight: 700;
+    border: 2.5px solid #d1d5db; border-radius: 50px; cursor: pointer;
+    background: white; color: #9ca3af;
+    transition: transform 0.18s;
+    width: 100%;
+  }
+  .btn-no:hover { background: #f3f4f6; }
+
+  .star {
+    position: fixed; font-size: 22px;
+    animation: floatUp 2.5s linear forwards;
+    pointer-events: none; z-index: 9999;
+  }
+  @keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+  }
+</style>
+
+<div class="wrap">
+  <div class="card" id="card">
+    <span class="emoji-big">✨</span>
+    <h2>hai FELISCHADWINNA</h2>
+    <p>aku mau bilang sesuatu<br>tapi kamu jangan marah ya.</p>
+    <button class="btn" onclick="nextStep(1)">Yaudah, bilang aja →</button>
+  </div>
+</div>
+
+<script>
+const card = document.getElementById('card');
+
+function anim() {
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'fadeIn 0.6s ease';
+}
+
+function nextStep(step) {
+  anim();
+  if (step === 1) {
+    card.innerHTML = `
+      <span class="emoji-big">📚</span>
+      <h2>UAS-mu deket banget kan?</h2>
+      <p>Cie begadang lagi HAHAHAHAHA.<br>Tapi sebelum balik belajar,<br>dengerin dulu ya.</p>
+      <button class="btn" onclick="nextStep(2)">Oke oke, lanjut →</button>
+    `;
+  } else if (step === 2) {
+    card.innerHTML = `
+      <span class="emoji-big">🌟</span>
+      <h2>Kamu tuh keren dan ga bodoh</h2>
+      <p>Lolos UI, jurusan Manajemen pula—<br>that's not a small thing.<br>Nggak semua orang sekuat kamu<br>yang udah sampai sejauh ini.</p>
+      <button class="btn" onclick="nextStep(3)">Aww, terus? →</button>
+    `;
+  } else if (step === 3) {
+    card.innerHTML = `
+      <span class="emoji-big">💪</span>
+      <h2>Every late night counts</h2>
+      <p>Semua begadang, semua tugas,<br>semua ujian yang udah kamu lewatin—<br>itu yang ngebentuk kamu<br>jadi orang yang <strong class="hl">super tangguh</strong>, which is so you.</p>
+      <button class="btn" onclick="nextStep(4)">Masih ada lagi nih →</button>
+    `;
+  } else if (step === 4) {
+    card.innerHTML = `
+      <span class="emoji-big">🔥</span>
+      <h2>So gaskeun UAS-nya!</h2>
+      <p>Felischa si anak UI MENE🔥🔥—<br>Semoga semua nilai-nilainya<br><strong class="hl">bikin kamu nangis (bahagia)</strong> ya! 🎉</p>
+      <button class="btn" onclick="nextStep(5)">Sip! Ada apa lagi? →</button>
+    `;
+  } else if (step === 5) {
+    card.innerHTML = `
+      <span class="emoji-big">🤭</span>
+      <h2>Eh, one more thing…</h2>
+      <p>Abis UAS selesai,<br>kita ngerayain bareng yuk!<br><br>Pilih yang mana nih?</p>
+      <div class="choices">
+        <button class="btn-choice" onclick="final('padel')">🏓 Main Padel Bareng</button>
+        <button class="btn-choice" onclick="final('nonton')">🎬 Nonton Bareng</button>
+        <button class="btn-no" id="noBtn" onmouseover="moveNo()">Nggak mau 🙈</button>
+      </div>
+    `;
+  }
+}
+
+function moveNo() {
+  const noBtn = document.getElementById('noBtn');
+  if (!noBtn) return;
+  noBtn.style.position = 'fixed';
+  noBtn.style.width = '160px';
+  noBtn.style.left = Math.max(8, Math.random() * (window.innerWidth - 170)) + 'px';
+  noBtn.style.top = Math.max(8, Math.random() * (window.innerHeight - 60)) + 'px';
+  noBtn.style.zIndex = '999';
+}
+
+function final(choice) {
+  stars();
+  anim();
+  if (choice === 'padel') {
+    card.innerHTML = `
+      <span class="emoji-big">🏓</span>
+      <h2>Yesss let's gooo!</h2>
+      <p>Oke deal—fokus dulu buat UAS-nya,<br>habisin semua soalnya.<br><br>Abis itu kita <strong class="hl">main padel bareng</strong><br>sebagai self-reward yang worth it banget! 🎉</p>
+      <p style="margin-top:1rem; font-size:13px; color:#aaa;">Semangat Felischa, you literally got this ✨</p>
+    `;
+  } else {
+    card.innerHTML = `
+      <span class="emoji-big">🎬</span>
+      <h2>Slay dulu UAS-nya!</h2>
+      <p>Oke bestie, habisin dulu ujiannya—<br>tunjukin that Manajemen UI girl energy.<br><br>Nanti kita <strong class="hl">nonton bareng</strong><br>as the ultimate reward! 🍿</p>
+      <p style="margin-top:1rem; font-size:13px; color:#aaa;">Semangat Felischa, you literally got this ✨</p>
+    `;
+  }
+}
+
+function stars() {
+  const emojis = ['✨','⭐','🌟','💫','🎉','💜'];
+  const iv = setInterval(() => {
+    const el = document.createElement('div');
+    el.className = 'star';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * (window.innerWidth - 30) + 'px';
+    el.style.bottom = '0';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2500);
+  }, 220);
+  setTimeout(() => clearInterval(iv), 5000);
+}
+</script>
